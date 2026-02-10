@@ -13,13 +13,15 @@ export default async function AppHomePage() {
 
   const [users, projects] = await Promise.all([
     UserModel.find({ companyId: session.companyId }).sort({ name: 1 }).lean(),
-    ProjectModel.find({ companyId: session.companyId }).sort({ createdAt: -1 }).lean(),
+    ProjectModel.find({ companyId: session.companyId })
+      .sort({ createdAt: -1 })
+      .lean(),
   ]);
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col md:flex-row gap-6">
       {/* Sidebar */}
-      <aside className="hidden w-60 flex-shrink-0 rounded-3xl bg-white/70 p-5 shadow-sm shadow-slate-200 md:flex md:flex-col">
+      <aside className="w-full md:w-60 flex-shrink-0 rounded-3xl bg-white/70 p-5 shadow-sm shadow-slate-200 flex flex-col">
         <div className="mb-6 flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-500 text-xs font-semibold text-white shadow-md shadow-indigo-400/60">
             TF
@@ -71,7 +73,9 @@ export default async function AppHomePage() {
         <section className="mb-6 space-y-2">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-slate-700">Team</h2>
-            <span className="text-xs text-slate-500">{users.length} members</span>
+            <span className="text-xs text-slate-500">
+              {users.length} members
+            </span>
           </div>
           <div className="flex flex-wrap gap-2">
             {users.map((u) => (
@@ -93,7 +97,9 @@ export default async function AppHomePage() {
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-slate-700">Projects</h2>
             <span className="text-xs text-slate-500">
-              {projects.length === 0 ? "No projects yet" : `${projects.length} active`}
+              {projects.length === 0
+                ? "No projects yet"
+                : `${projects.length} active`}
             </span>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
@@ -114,4 +120,3 @@ export default async function AppHomePage() {
     </div>
   );
 }
-
