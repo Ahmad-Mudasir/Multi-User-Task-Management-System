@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const root = __dirname;
+
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
@@ -10,6 +12,14 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Ensure Turbopack and file tracing both treat the app directory
+  // (`task-manager`) as the workspace root. This avoids Next trying
+  // to infer `/Users/ahmad` as the root when it sees other lockfiles,
+  // which was causing local dev panics and Tailwind resolution errors.
+  turbopack: {
+    root,
+  },
+  outputFileTracingRoot: root,
 };
 
 export default nextConfig;
