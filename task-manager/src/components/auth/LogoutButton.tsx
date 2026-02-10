@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
 import { Button } from "@/components/ui/Button";
 
 export function LogoutButton() {
@@ -12,26 +11,22 @@ export function LogoutButton() {
   async function onClick() {
     if (loading) return;
     setLoading(true);
+
     try {
-      await fetch("/api/auth/logout", { method: "POST" });
-    } catch {
-      // ignore network errors, we'll still try to navigate
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
     } finally {
       setLoading(false);
-      router.push("/");
+      router.replace("/login"); // better than push
       router.refresh();
     }
   }
 
   return (
-    <Button
-      type="button"
-      variant="secondary"
-      onClick={onClick}
-      className="w-full justify-start rounded-xl border border-slate-200 px-3 py-2 text-left text-xs font-normal text-slate-500 hover:bg-slate-50"
-    >
-      {loading ? "Logging out…" : "Log out"}
+    <Button onClick={onClick} disabled={loading}>
+      {loading ? "Logging out..." : "Logout"}
     </Button>
   );
 }
-
