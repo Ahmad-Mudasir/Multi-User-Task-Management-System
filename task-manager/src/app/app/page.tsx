@@ -5,6 +5,7 @@ import { dbConnect } from "@/lib/db/mongoose";
 import { ProjectModel, UserModel } from "@/lib/db/models";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { NewProjectButton } from "@/components/projects/NewProjectButton";
+import { LogoutButton } from "@/components/auth/LogoutButton";
 
 export default async function AppHomePage() {
   const session = await requireSession();
@@ -42,11 +43,7 @@ export default async function AppHomePage() {
         </nav>
 
         <div className="mt-auto pt-4">
-          <form action="/api/auth/logout" method="post">
-            <button className="w-full cursor-pointer rounded-xl border border-slate-200 px-3 py-2 text-left text-xs text-slate-500 hover:bg-slate-50">
-              Log out
-            </button>
-          </form>
+          <LogoutButton />
         </div>
       </aside>
 
